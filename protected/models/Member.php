@@ -30,16 +30,21 @@ class Member extends CActiveRecord
 	 */
 	public function rules()
 	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
 		return array(
-			array('last_name, first_name, phone, email, conference_id', 'required'),
-			array('conference_id', 'numerical', 'integerOnly'=>true),
+			// Обязательные для заполнения поля
+			array('last_name, first_name, phone, email, conference_id', 'required',
+				'message' => 'Не забудьте заполнить поле'),
+			// Проверить, что есть конференция с соответствующим id
+			array('conference_id', 'exist', 
+					'className' => 'Conference', //
+					'attributeName' => 'id', // Конференцию ищем по id
+					'allowEmpty' => false, // Поле не должно быть пустым
+				),
+			// Ограничение на максимальную длину текстового поля
 			array('last_name, first_name, phone, email', 'length', 'max'=>45),
-			array('reg_date', 'safe'),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('id, last_name, first_name, phone, email, conference_id, reg_date', 'safe', 'on'=>'search'),
+			// Поля, используемые для поиска
+			array('id, last_name, first_name, phone, email, conference_id, reg_date', 
+				'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,12 +67,12 @@ class Member extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'last_name' => 'Last Name',
-			'first_name' => 'First Name',
-			'phone' => 'Phone',
-			'email' => 'Email',
-			'conference_id' => 'Conference',
-			'reg_date' => 'Reg Date',
+			'last_name' => 'Фамилия',
+			'first_name' => 'Имя',
+			'phone' => 'Номер телефона',
+			'email' => 'E-mail',
+			'conference_id' => 'Конференция',
+			'reg_date' => 'Дата регистрации',
 		);
 	}
 
