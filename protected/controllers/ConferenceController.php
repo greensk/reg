@@ -16,4 +16,10 @@ class ConferenceController extends Controller {
 		$this->render('index', array('list' => $conferencies));
 	}
 	
+	public function actionMembers($id)
+	{
+		$model = Conference::model()->with('members')->findByPk($id);
+		$this->render('members', array('model' => $model));
+	}
+	
 }
