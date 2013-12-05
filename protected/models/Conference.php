@@ -9,6 +9,9 @@
  * @property string $description
  * @property string $created
  * @property integer $enabled
+ * @property string $location
+ * @property string $start_date
+ * @property string $start_time
  *
  * The followings are the available model relations:
  * @property Member[] $members
@@ -33,10 +36,11 @@ class Conference extends CActiveRecord
 		return array(
 			array('enabled', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>100),
-			array('description, created', 'safe'),
+			array('start_time', 'length', 'max'=>45),
+			array('description, created, location, start_date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, title, description, created, enabled', 'safe', 'on'=>'search'),
+			array('id, title, description, created, enabled, location, start_date, start_time', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -63,6 +67,9 @@ class Conference extends CActiveRecord
 			'description' => 'Description',
 			'created' => 'Created',
 			'enabled' => 'Enabled',
+			'location' => 'Location',
+			'start_date' => 'Start Date',
+			'start_time' => 'Start Time',
 		);
 	}
 
@@ -89,6 +96,9 @@ class Conference extends CActiveRecord
 		$criteria->compare('description',$this->description,true);
 		$criteria->compare('created',$this->created,true);
 		$criteria->compare('enabled',$this->enabled);
+		$criteria->compare('location',$this->location,true);
+		$criteria->compare('start_date',$this->start_date,true);
+		$criteria->compare('start_time',$this->start_time,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
