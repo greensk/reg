@@ -33,9 +33,30 @@ class ConferenceController extends Controller {
 		$this->render('view', array('model' => $conference));
 	}
 	
+	/**
+	 * Страница списка конференций.
+	 * 
+	 */
 	public function actionIndex()
 	{
-		$conferencies = Conference::model()->findAll();
+		/*
+		 * Используем метод findAll для получения записей из
+		 * соответствующей таблицы. В качестве параметра передаем массив
+		 * условий — фрагментов SQL-запроса. condition — условия 
+		 * выборки записей (WHERE в SQL-запросе), order — условие
+		 * сортировки записей (ORDER в SQL-запросе). В данном случае
+		 * записи будем сортировать по убыванию id, чтобы в начале 
+		 * оказались самые новые мероприятия.
+		 * 
+		 */
+		$conferencies = Conference::model()->findAll(array(
+				'condition' => 'enabled = 1', 'order' => 'id DESC'));
+				
+		/*
+		 * Вызываем соответствующее представление, передав ему
+		 * полученный массив записей
+		 * 
+		 */
 		$this->render('index', array('list' => $conferencies));
 	}
 	

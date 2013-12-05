@@ -1,15 +1,12 @@
 <!-- protected/views/conference/index.php -->
 <h1>Наши мероприятия</h1>
-<table>
-	<tr>
-		<th>Название</th>
-		<th>Дата окончания регистрации</th>
-	</tr>
+<ul>
+	<!-- Выполняем действия для каждого элемента массива list -->
 	<?php foreach($list as $item): ?>
-	<tr>
-		<td><?php echo CHtml::link(CHtml::encode($item->title),
-			array('conference/view', 'id' => $item->id)); ?></td>
-		<td><?php echo CHtml::encode($item->till); ?></td>
-	</tr>
+		<!-- Выводим ссылку на страницу соответствующей конференции -->
+		<li><?php echo CHtml::link(CHtml::encode($item->title),
+				array('conference/view', 'id' => $item->id)); ?></li>
+	<!-- В представлениях удобнее использовать такой вариант синтаксиса
+	вместо фигурных скобок -->
 	<?php endforeach; ?>
-</table>
+</ul>
