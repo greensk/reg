@@ -6,8 +6,9 @@
  * The followings are the available columns in table 'conference':
  * @property integer $id
  * @property string $title
- * @property string $till
  * @property string $description
+ * @property string $created
+ * @property integer $enabled
  *
  * The followings are the available model relations:
  * @property Member[] $members
@@ -30,11 +31,12 @@ class Conference extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('enabled', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>100),
-			array('till, description', 'safe'),
+			array('description, created', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, title, till, description', 'safe', 'on'=>'search'),
+			array('id, title, description, created, enabled', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -58,8 +60,9 @@ class Conference extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'title' => 'Title',
-			'till' => 'Till',
 			'description' => 'Description',
+			'created' => 'Created',
+			'enabled' => 'Enabled',
 		);
 	}
 
@@ -83,8 +86,9 @@ class Conference extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('title',$this->title,true);
-		$criteria->compare('till',$this->till,true);
 		$criteria->compare('description',$this->description,true);
+		$criteria->compare('created',$this->created,true);
+		$criteria->compare('enabled',$this->enabled);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
