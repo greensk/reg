@@ -26,20 +26,57 @@ class Member extends CActiveRecord
 	}
 
 	/**
-	 * @return array validation rules for model attributes.
+	 * @return array правила валидации атрибутов
 	 */
 	public function rules()
 	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
+		/*
+		 * Метод должен возвращать массив с правилами валидации
+		 * данных об участнике конференции.
+		 * 
+		 * Массив должен состоять из элементов, каждый из которых
+		 * соответствует одному правилу валилации. Каждый из них
+		 * в свою очередь также явялется массивом. Первый элемент —
+		 * название поля, валидация которого производится. Второй
+		 * элемент — наименование правила валидации.
+		 * Далее, в зависимости от правила, могут идти еще 
+		 * дополнительные аргументы.
+		 * 
+		 * Обратите внимание: если нужно создать правило для нескольких
+		 * полей, в качестве первого элемента указывается одна строка,
+		 * в которой названия полей перечислены через запятую. 
+		 */
 		return array(
-			array('last_name, first_name, phone, email, conference_id', 'required'),
-			array('conference_id', 'numerical', 'integerOnly'=>true),
-			array('last_name, first_name, phone, email', 'length', 'max'=>45),
-			array('reg_date', 'safe'),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('id, last_name, first_name, phone, email, conference_id, reg_date', 'safe', 'on'=>'search'),
+			/*
+			 * Обязательные для заполнения поля.
+			 * 
+			 */
+			array('last_name, first_name, email, conference_id', 
+				'required'),
+			
+			/*
+			 * Указываем, что поле conference_id должно указывать
+			 * на существующую запись в таблице conference.
+			 * className — имя класса той модели, на которую ссылаемся,
+			 * attributeName — имя атрибута, значению которого должно
+			 * соответствовать значение conference_id. В данном
+			 * случае conference_id -> Conference.id.
+			 */
+			array('conference_id', 'exist', 'className' => 'Conference', 
+				'attributeName' => 'id'),
+				
+			/*
+			 * Ограничение на максимальную длину значений.
+			 * 
+			 */
+			array('last_name, first_name, phone, email', 
+				'length', 'max'=>45),
+			
+			/*
+			 * Проверка, что значение является корректным e-mail адресом.
+			 * 
+			 */
+			array('email', 'email'),
 		);
 	}
 
@@ -62,12 +99,12 @@ class Member extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'last_name' => 'Last Name',
-			'first_name' => 'First Name',
-			'phone' => 'Phone',
-			'email' => 'Email',
-			'conference_id' => 'Conference',
-			'reg_date' => 'Reg Date',
+			'last_name' => 'Фамилия',
+			'first_name' => 'Имя',
+			'phone' => 'Телефон',
+			'email' => 'E-mail',
+			'conference_id' => 'Мероприятие',
+			'reg_date' => 'Дата регистрации',
 		);
 	}
 
