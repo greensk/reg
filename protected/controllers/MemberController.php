@@ -1,4 +1,5 @@
 <?php
+// protected/controllers/MemberController.php
 class MemberController extends Controller {
 	
 	/*
