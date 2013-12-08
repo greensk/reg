@@ -51,8 +51,8 @@ class Member extends CActiveRecord
 			 * Обязательные для заполнения поля.
 			 * 
 			 */
-			array('last_name, first_name, email, conference_id', 
-				'required'),
+			array('last_name, first_name, email, conference_id', 'required', 
+				'message' => 'Поле обязательно для заполнения'),
 			
 			/*
 			 * Указываем, что поле conference_id должно указывать
