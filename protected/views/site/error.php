@@ -1,7 +1,5 @@
+<!-- protected/views/site/error.php -->
 <?php
-/* @var $this SiteController */
-/* @var $error array */
-
 <h2>Ошибка <?php echo $code; ?></h2>
 
 <div class="error">

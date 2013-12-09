@@ -1,3 +1,4 @@
+<!-- protected/views/conference/members.php -->
 <?php echo CHtml::link('На страницу администрирования', array('conference/admin')); ?>
 <h1>Участники мероприятия <?php echo CHtml::encode($model->title); ?>:</h1>
 <?php if (empty($model->members)): ?>

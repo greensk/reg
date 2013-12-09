@@ -1,4 +1,6 @@
 <?php
+// protected/controllers/SiteController.php
+
 
 /*
  * Класс содержит стандартный набор действий, генерируемый при

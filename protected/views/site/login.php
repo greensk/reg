@@ -1,11 +1,5 @@
-<?php
-/* @var $this SiteController */
-/* @var $model LoginForm */
-/* @var $form CActiveForm  */
-
-echo CHtml::link('На главную', array('/')); 
-?>
-
+<!-- protected/views/site/login.php -->
+<?php echo CHtml::link('На главную', array('/')); ?>
 <h1>Вход в систему</h1>
 
 <div class="form">
