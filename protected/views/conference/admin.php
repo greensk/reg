@@ -1,4 +1,5 @@
-<?php echo CHtml::link('К списку мероприятий', array('conference/index')); ?>
+<!-- protected/views/conference/admin.php -->
+<?php echo CHtml::link('Выход', array('site/logout')); ?>
 <table>
 	<tr>
 		<th>№</th>
