@@ -1,4 +1,5 @@
 <!-- protected/views/member/edit.php -->
+<h2><?php echo CHtml::link($conference->title, array('conference/view', 'id' => $conference->id)); ?></h2>
 
 <!-- Выводим форму ввода данных -->
 <?php $form = $this->beginWidget('CActiveForm') ?>

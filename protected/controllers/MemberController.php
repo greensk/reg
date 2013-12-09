@@ -9,6 +9,12 @@ class MemberController extends Controller {
 	 */
 	public function actionAdd($conference)
 	{
+		// Загрузим модель конференции (она понадобится для представления)
+		$conferenceModel = Conference::model()->findByPk($conference);
+		
+		if ($conferenceModel === null || $conferenceModel->enabled == 0)
+			throw new CHttpException(404);
+	
 		// Создаем новую модель участника.
 		$model = new Member;
 		// Задаем ему id конференции в соответствии с переданным параметром
@@ -46,6 +52,7 @@ class MemberController extends Controller {
 		 */
 		$this->render('edit',array(
 				'model'=>$model,
+				'conference'=>$conferenceModel,
 		));
 
 	}
