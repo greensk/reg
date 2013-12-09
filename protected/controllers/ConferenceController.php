@@ -66,4 +66,73 @@ class ConferenceController extends Controller {
 		$this->render('members', array('model' => $model));
 	}
 	
+	/*
+	 * Правила доступа для действий данного контроллера.
+	 * 
+	 */
+	public function filters()
+	{
+			return array(
+					'accessControl',
+			);
+	}
+        
+	/**
+	 * Правила доступа для пользователей.
+	 * К действиям admin и edit должны иметь доступ только 
+	 * авторизированные пользователи — администраторы системы.
+	 * 
+	 * @return array 
+	 */
+	public function accessRules()
+	{
+		return array(
+			array('allow', 
+				
+				'users'=>array('@'),
+			),
+			array('deny', 
+				'actions'=>array('admin', 'edit', 'add', 'members'),
+				'users'=>array('*'),
+			),
+		);
+	}
+
+	// Управление списком мероприятий.
+	public function actionAdmin()
+	{
+		/*
+		 * Данное действие аналогично действию index, однако выводятся
+		 * все мероприятия, в том числе и не активные на текущий момент.
+		 * 
+		 */
+		$conferencies = Conference::model()->findAll(array('order' => 'id DESC'));
+		$this->render('admin', array('list' => $conferencies));
+
+	}
+	
+	public function actionEdit($id)
+	{
+		$model = Conference::model()->findByPk($id);
+		if ($form = Yii::app()->request->getParam('Conference')) {
+			$model->attributes= $form;
+			if ($model->save(true)) {
+				$this->redirect(CHtml::normalizeUrl(array('conference/admin')));
+			}
+		}
+		$this->render('edit', array('model' => $model));
+	}
+	
+	public function actionAdd()
+	{
+		$model = new Conference;
+		if ($form = Yii::app()->request->getParam('Conference')) {
+			$model->attributes= $form;
+			if ($model->save(true)) {
+				$this->redirect(CHtml::normalizeUrl(array('conference/admin')));
+			}
+		}
+		$this->render('edit', array('model' => $model));
+	}
+	
 }

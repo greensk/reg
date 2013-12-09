@@ -67,4 +67,19 @@ class MemberController extends Controller {
 	{
 		$this->render('success');
 	}
+	
+	public function actionDelete($id, $confirm = false)
+	{
+		$model = Member::model()->with('conference')->findByPk($id);
+		if (!$model) {
+			throw new CHttpException(404);
+		}
+		if ($confirm) {
+			$model->delete();
+			$this->redirect(array('conference/members', 'id' => $model->conference->id));
+		} else {
+			$this->render('delete', array('model' => $model));
+		}
+	}
+	
 }

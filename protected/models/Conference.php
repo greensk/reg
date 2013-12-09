@@ -63,13 +63,13 @@ class Conference extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'title' => 'Title',
-			'description' => 'Description',
-			'created' => 'Created',
-			'enabled' => 'Enabled',
-			'location' => 'Location',
-			'start_date' => 'Start Date',
-			'start_time' => 'Start Time',
+			'title' => 'Название',
+			'description' => 'Описание',
+			'created' => 'Дата создания',
+			'enabled' => 'Включено',
+			'location' => 'Мето проведения',
+			'start_date' => 'Дата начала',
+			'start_time' => 'Время начала',
 		);
 	}
 
