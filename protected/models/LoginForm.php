@@ -1,9 +1,16 @@
 <?php
 
 /**
- * LoginForm class.
- * LoginForm is the data structure for keeping
- * user login form data. It is used by the 'login' action of 'SiteController'.
+ * Модель формы входа в систему.
+ * 
+ * Так как у нас в базе данных нет таблицы пользователей, 
+ * в качестве регистрационные данные будем хранить просто 
+ * к конфигурационном файле. 
+ * 
+ * Данный класс является моделью, однако он не является классом
+ * ActiveRecord, а является классом FromModel, т.е. его данные
+ * не сохраняются в базе данных или где-то еще, а просто содержатся 
+ * в памяти сервера на время выполнения скрипта.
  */
 class LoginForm extends CFormModel
 {
@@ -14,9 +21,11 @@ class LoginForm extends CFormModel
 	private $_identity;
 
 	/**
-	 * Declares the validation rules.
-	 * The rules state that username and password are required,
-	 * and password needs to be authenticated.
+	 * Правила проверки формы — имя пользователя и пароль должны быть
+	 * введены, они должны быть верные, поле «Запомнить меня» должно
+	 * иметь тип boolean.
+	 * 
+	 * @return array
 	 */
 	public function rules()
 	{
@@ -31,18 +40,22 @@ class LoginForm extends CFormModel
 	}
 
 	/**
-	 * Declares attribute labels.
+	 * Текстовые обозначения полей формы
+	 * 
+	 * @return array
 	 */
 	public function attributeLabels()
 	{
 		return array(
-			'rememberMe'=>'Remember me next time',
+			'rememberMe' => 'Запомнить меня',
+			'username' => 'Имя пользователя',
+			'password' => 'Пароль',
 		);
 	}
 
 	/**
-	 * Authenticates the password.
-	 * This is the 'authenticate' validator as declared in rules().
+	 * Этот метод проверяет корректность введенных имени пользователя
+	 * и пароля. Для этого используется класс UserIdentity.
 	 */
 	public function authenticate($attribute,$params)
 	{
@@ -50,13 +63,13 @@ class LoginForm extends CFormModel
 		{
 			$this->_identity=new UserIdentity($this->username,$this->password);
 			if(!$this->_identity->authenticate())
-				$this->addError('password','Incorrect username or password.');
+				$this->addError('password','Неверное имя пользователя или пароль.');
 		}
 	}
 
 	/**
-	 * Logs in the user using the given username and password in the model.
-	 * @return boolean whether login is successful
+	 * Метод входа в систему.
+	 * 
 	 */
 	public function login()
 	{

@@ -1,26 +1,31 @@
 <?php
 
 /**
- * UserIdentity represents the data needed to identity a user.
- * It contains the authentication method that checks if the provided
- * data can identity the user.
+ * Класс реализует действия, необходимые для авторизации пользователя.
+ * Здесь можно реализовать загрузку пользователей из базы данных,
+ * шифрование (хэшированрие) паролей пользователей и т.д.
+ * В нашем же случае просто возьмем пароль из файла конфигурации.
+ * 
  */
 class UserIdentity extends CUserIdentity
 {
 	/**
-	 * Authenticates a user.
-	 * The example implementation makes sure if the username and password
-	 * are both 'demo'.
-	 * In practical applications, this should be changed to authenticate
-	 * against some persistent user identity storage (e.g. database).
-	 * @return boolean whether authentication succeeds.
+	 * Введенные имя пользователя и пароль уже записаны 
+	 * в свойства класса $this->username и 
+	 * $this->password соответствнно.
+	 * 
+	 * Нам же нужно проверить их корректность и вернуть:
+	 * self::ERROR_USERNAME_INVALID если неверное имя пользователя,
+	 * self::ERROR_USERNAME_INVALID если неверный пароль,
+	 * self::ERROR_USERNAME_INVALID если имя пользователя и пароль
+	 * правильные.
+	 * 
+	 * @return int
 	 */
 	public function authenticate()
 	{
 		$users=array(
-			// username => password
-			'demo'=>'demo',
-			'admin'=>'admin',
+			'admin' => Yii::app()->params['adminPassword']
 		);
 		if(!isset($users[$this->username]))
 			$this->errorCode=self::ERROR_USERNAME_INVALID;
