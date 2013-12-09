@@ -82,4 +82,36 @@ class MemberController extends Controller {
 		}
 	}
 	
+	/*
+	 * Правила доступа для действий данного контроллера.
+	 * 
+	 */
+	public function filters()
+	{
+			return array(
+					'accessControl',
+			);
+	}
+        
+	/**
+	 * Правила доступа для пользователей — здесь нужно ограничить
+	 * только доступ к действию delete.
+	 * 
+	 * @return array 
+	 */
+	public function accessRules()
+	{
+		return array(
+			array('allow', 
+				
+				'users'=>array('@'),
+			),
+			array('deny', 
+				'actions'=>array('delete'),
+				'users'=>array('*'),
+			),
+		);
+	}
+
+	
 }

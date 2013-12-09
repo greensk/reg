@@ -1,5 +1,6 @@
 <?php
 // protected/controllers/ConferenceController.php
+
 class ConferenceController extends Controller {
 	
 	/**
@@ -111,6 +112,7 @@ class ConferenceController extends Controller {
 
 	}
 	
+	// Редактирование мероприятия (для администратора)
 	public function actionEdit($id)
 	{
 		$model = Conference::model()->findByPk($id);
@@ -123,6 +125,7 @@ class ConferenceController extends Controller {
 		$this->render('edit', array('model' => $model));
 	}
 	
+	// Добавление мероприятия (для администратора)
 	public function actionAdd()
 	{
 		$model = new Conference;
