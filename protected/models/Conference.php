@@ -45,12 +45,23 @@ class Conference extends CActiveRecord
 	}
 
 	/**
-	 * @return array relational rules.
+	 * Связи между таблицами
+	 * 
+	 * @return array
 	 */
 	public function relations()
 	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
+		/*
+		 * members — название связи (по нему мы будем обращаться к 
+		 * связанным данным),
+		 * self::HAS_MANY означает, что используется связь один ко 
+		 * многим, одна сущность текущей модели соответствует множеству
+		 * сущностей модели member,
+		 * 'Member' — имя модели, на данные которой мы ссылаемся,
+		 * 'conference_id' — поле в текущей модели, по которому осуществляется
+		 * связывание
+		 * 
+		 */
 		return array(
 			'members' => array(self::HAS_MANY, 'Member', 'conference_id'),
 		);

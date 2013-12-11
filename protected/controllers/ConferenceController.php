@@ -61,6 +61,11 @@ class ConferenceController extends Controller {
 		$this->render('index', array('list' => $conferencies));
 	}
 	
+	/*
+	 * Страница отображения списка участников мероприятия 
+	 * (для администратора).
+	 * 
+	 */
 	public function actionMembers($id)
 	{
 		$model = Conference::model()->with('members')->findByPk($id);

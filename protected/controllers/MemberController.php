@@ -68,6 +68,12 @@ class MemberController extends Controller {
 		$this->render('success');
 	}
 	
+	/**
+	 * Удаление участника конференции администратором.
+	 * При первом запросе запрашивается подтверждение.
+	 * После этого действие вызывается уже с параметров $confirm = true.
+	 *
+	 */
 	public function actionDelete($id, $confirm = false)
 	{
 		$model = Member::model()->with('conference')->findByPk($id);
@@ -76,6 +82,11 @@ class MemberController extends Controller {
 		}
 		if ($confirm) {
 			$model->delete();
+			/*
+			 * После успешного удаление пользователь переадресуется
+			 * на полный список участников конференции.
+			 * 
+			 */
 			$this->redirect(array('conference/members', 'id' => $model->conference->id));
 		} else {
 			$this->render('delete', array('model' => $model));
