@@ -65,7 +65,8 @@ class MemberController extends Controller {
 	 */
 	public function actionSuccess($id)
 	{
-		$this->render('success');
+		$model = Member::model()->with('conference')->findByPk($id);
+		$this->render('success', array('model' => $model));
 	}
 	
 	/**
